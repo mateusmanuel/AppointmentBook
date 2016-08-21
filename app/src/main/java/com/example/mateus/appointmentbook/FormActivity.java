@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mateus.appointmentbook.dao.StudentDAO;
 import com.example.mateus.appointmentbook.model.Student;
 
 public class FormActivity extends AppCompatActivity {
@@ -38,6 +39,9 @@ public class FormActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.form_menu:
                 Student student = helper.getStudent();
+                StudentDAO dao = new StudentDAO(this);
+                dao.insert(student);
+                dao.close();
 
                 Toast.makeText(FormActivity.this, student.getName() + " Saved!", Toast.LENGTH_SHORT).show();
 
