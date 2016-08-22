@@ -1,13 +1,13 @@
-package com.example.mateus.appointmentbook;
+package com.example.mateus.appointmentbook.controller;
 
-import android.app.Activity;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
+import com.example.mateus.appointmentbook.R;
 import com.example.mateus.appointmentbook.model.Student;
 
 /**
- * Created by mateus on 8/21/16.
+ * Created by mateus on 8/21/1 6.
  */
 public class FormHelper {
 
