@@ -23,7 +23,7 @@ public class StudentDAO extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE Students (id INTEGER PRIMARY KEY, name TEXT NOT NULL, address TEXT, phone TEXT, site TEXT, rate REAL";
+        String sql = "CREATE TABLE Students (id INTEGER PRIMARY KEY, name TEXT NOT NULL, address TEXT, phone TEXT, site TEXT, rate REAL)";
         db.execSQL(sql);
     }
 
@@ -34,19 +34,11 @@ public class StudentDAO extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insert(Student student) {
-        SQLiteDatabase db = getWritableDatabase();
-
-        ContentValues data = getStudentData(student);
-
-        db.insert("Students", null, data);
-    }
-
     @NonNull
     private ContentValues getStudentData(Student student) {
         ContentValues data = new ContentValues();
         data.put("name", student.getName());
-        data.put("adress", student.getAddress());
+        data.put("address", student.getAddress());
         data.put("phone", student.getPhone());
         data.put("site", student.getSite());
         data.put("rate", student.getRate());
@@ -74,6 +66,14 @@ public class StudentDAO extends SQLiteOpenHelper {
         c.close();
 
         return students;
+    }
+
+    public void insert(Student student) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues data = getStudentData(student);
+
+        db.insert("Students", null, data);
     }
 
     public void delete(Student student) {
