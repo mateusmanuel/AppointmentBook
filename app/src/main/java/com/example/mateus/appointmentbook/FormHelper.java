@@ -29,7 +29,6 @@ public class FormHelper {
     }
 
     public Student getStudent() {
-        Student student = new Student();
         student.setName(nameField.getText().toString());
         student.setAddress(addressField.getText().toString());
         student.setPhone(phoneField.getText().toString());
