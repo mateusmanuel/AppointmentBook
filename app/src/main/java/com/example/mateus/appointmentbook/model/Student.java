@@ -1,9 +1,11 @@
 package com.example.mateus.appointmentbook.model;
 
+import java.io.Serializable;
+
 /**
  * Created by mateus on 8/21/16.
  */
-public class Student {
+public class Student implements Serializable{
     private Long id;
     private String name;
     private String address;

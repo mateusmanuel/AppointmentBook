@@ -24,6 +24,12 @@ public class FormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_form);
 
         helper = new FormHelper(this);
+
+        Intent intent = getIntent();
+        Student student = (Student) intent.getSerializableExtra("student");
+        if(student != null){
+            helper.fillForm(student);
+        }
     }
 
     @Override
@@ -39,8 +45,13 @@ public class FormActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.form_menu:
                 Student student = helper.getStudent();
+
                 StudentDAO dao = new StudentDAO(this);
-                dao.insert(student);
+                if(student.getId() != null){
+                    dao.update(student);
+                } else {
+                    dao.insert(student);
+                }
                 dao.close();
 
                 Toast.makeText(FormActivity.this, student.getName() + " Saved!", Toast.LENGTH_SHORT).show();

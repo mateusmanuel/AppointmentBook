@@ -33,6 +33,17 @@ public class StudentsListActivity extends AppCompatActivity {
 
         studentsList = (ListView) findViewById(id.students_list);
 
+        studentsList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> list, View item, int position, long id) {
+                Student student = (Student) studentsList.getItemAtPosition(position);
+
+                Intent goToForm = new Intent(StudentsListActivity.this, FormActivity.class);
+                goToForm.putExtra("student", student);
+                startActivity(goToForm);
+            }
+        });
+
         Button newStudent = (Button) findViewById(id.new_student);
         newStudent.setOnClickListener(new View.OnClickListener() {
             @Override

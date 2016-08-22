@@ -17,13 +17,15 @@ public class FormHelper {
     private final EditText siteField;
     private final RatingBar rateField;
 
+    private Student student;
+
     public FormHelper(FormActivity activity){
         nameField  = (EditText) activity.findViewById(R.id.form_name);
         addressField  = (EditText) activity.findViewById(R.id.form_address);
         phoneField  = (EditText) activity.findViewById(R.id.form_phone);
         siteField  = (EditText) activity.findViewById(R.id.form_site);
         rateField  = (RatingBar) activity.findViewById(R.id.form_rate);
-
+        student = new Student();
     }
 
     public Student getStudent() {
@@ -35,5 +37,14 @@ public class FormHelper {
         student.setRate(Double.valueOf(rateField.getProgress()));
 
         return student;
+    }
+
+    public void fillForm(Student student) {
+        nameField.setText(student.getName());
+        addressField.setText(student.getAddress());
+        phoneField.setText(student.getPhone());
+        siteField.setText(student.getSite());
+        rateField.setProgress(student.getRate().intValue());
+        this.student = student;
     }
 }

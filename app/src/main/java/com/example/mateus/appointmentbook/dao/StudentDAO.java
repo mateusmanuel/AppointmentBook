@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
 import com.example.mateus.appointmentbook.model.Student;
 
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by mateus on 8/21/16.
  */
-public class StudentDAO extends SQLiteOpenHelper{
+public class StudentDAO extends SQLiteOpenHelper {
 
     public StudentDAO(Context context) {
         super(context, "AppointmentBook", null, 1);
@@ -36,14 +37,20 @@ public class StudentDAO extends SQLiteOpenHelper{
     public void insert(Student student) {
         SQLiteDatabase db = getWritableDatabase();
 
+        ContentValues data = getStudentData(student);
+
+        db.insert("Students", null, data);
+    }
+
+    @NonNull
+    private ContentValues getStudentData(Student student) {
         ContentValues data = new ContentValues();
         data.put("name", student.getName());
         data.put("adress", student.getAddress());
         data.put("phone", student.getPhone());
         data.put("site", student.getSite());
         data.put("rate", student.getRate());
-
-        db.insert("AppointmentBook", null, data);
+        return data;
     }
 
     public List<Student> findStudents() {
@@ -52,7 +59,7 @@ public class StudentDAO extends SQLiteOpenHelper{
         Cursor c = db.rawQuery(sql, null);
 
         List<Student> students = new ArrayList<Student>();
-        while(c.moveToNext()){
+        while (c.moveToNext()) {
             Student student = new Student();
 
             student.setId(c.getLong(c.getColumnIndex("id")));
@@ -74,5 +81,14 @@ public class StudentDAO extends SQLiteOpenHelper{
 
         String[] params = {student.getId().toString()};
         db.delete("Students", "id = ?", params);
+    }
+
+    public void update(Student student) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues data = getStudentData(student);
+
+        String[] params = {student.getId().toString()};
+        db.update("Students", data, "id = ?", params);
     }
 }
