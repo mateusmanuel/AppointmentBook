@@ -2,10 +2,14 @@ package com.example.mateus.appointmentbook.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.mateus.appointmentbook.model.Student;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mateus on 8/21/16.
@@ -40,5 +44,28 @@ public class StudentDAO extends SQLiteOpenHelper{
         data.put("rate", student.getRate());
 
         db.insert("AppointmentBook", null, data);
+    }
+
+    public List<Student> findStudents() {
+        String sql = "SELECT * FROM Students;";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery(sql, null);
+
+        List<Student> students = new ArrayList<Student>();
+        while(c.moveToNext()){
+            Student student = new Student();
+
+            student.setId(c.getLong(c.getColumnIndex("id")));
+            student.setName(c.getString(c.getColumnIndex("name")));
+            student.setAddress(c.getString(c.getColumnIndex("address")));
+            student.setPhone(c.getString(c.getColumnIndex("phone")));
+            student.setSite(c.getString(c.getColumnIndex("site")));
+            student.setRate(c.getDouble(c.getColumnIndex("rate")));
+
+            students.add(student);
+        }
+        c.close();
+
+        return students;
     }
 }
